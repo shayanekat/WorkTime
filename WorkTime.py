@@ -2,7 +2,7 @@ from tkinter import *
 import time
 from playsound import playsound
 
-#TODO 23 May 2019 : add pause or work display
+#TODO 10 July 2019 : optimise the code
 
 #=====BACKEND=====
 def main():
@@ -36,16 +36,22 @@ def timer(n):
         #input : n=number of minutes
         #output : none
         global t
-        dt = time.time()
-        tps = time.time()-dt
-        s = str(int(tps%60))
-        m = str(int(tps//60))
-        while tps < n*60-2:
-                tps = time.time()-dt
-                s = str(int(tps%60))
-                m = str(int(tps//60))
-                t.set(m+":"+s)
+        s = 0
+        m = 0
+        dt = 0
+        while dt <= n*60-2:
+                mn = str(m)
+                sec = str(s)
+                t.set(mn+":"+sec)
+
+                time.sleep(1)
+                s += 1
+                dt += 1
+                if s == 60:
+                        s = 0
+                        m += 1
                 root.update()
+        
 
 #=====FRONTEND=====
 root = Tk()
